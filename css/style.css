@@ -431,13 +431,13 @@ form .row textarea {
     background: var(--bg-color);
 }
 
-.logout-btn {
+.logout {
     position: fixed;
     top: 10px;
     right: 10px;
 }
 
-.logout-btn button {
+.logout #logout-btn {
     width: 80px;
     height: 40px;
     border: none;

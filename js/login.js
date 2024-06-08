@@ -1,13 +1,20 @@
-const formLogin = document.querySelector("form.login")
-const formSignup = document.querySelector("form.signup")
-const loginBtn = document.querySelector("label.login")
-const signupBtn = document.querySelector("label.signup")
-const signupLink = document.querySelector(".signup-link a")
-const loginText = document.querySelector(".title-text .login")
-const signupText = document.querySelector(".title-text .signup")
+const qSelector = (element) => document.querySelector(element)
 
-const main = document.querySelector(".main")
-let welcomePopup = document.querySelector(".welcome")
+const formLogin = qSelector("form.login")
+const formSignup = qSelector("form.signup")
+const loginBtn = qSelector("label.login")
+const signupBtn = qSelector("label.signup")
+const signupLink = qSelector(".signup-link a")
+const loginText = qSelector(".title-text .login")
+const signupText = qSelector(".title-text .signup")
+
+const main = qSelector(".main")
+const usernameInput = qSelector("#username").value
+const emailInput = qSelector("#email-sign").value
+const passwordInput = qSelector("#password-sign").value
+const passwordConfirm = qSelector("#confirm-password").value
+const emailLogin = qSelector("#email").value
+const passwordLogin = qSelector("#password").value
 
 signupBtn.onclick = (()=>{
     formLogin.style.marginLeft = '-50%'
@@ -29,7 +36,7 @@ function toggleMode() {
     html.classList.toggle("dark")
 }
 
-function openPopup() {
+function openPopup(alert) {
   main.classList.add("close-on-popup")  
   welcomePopup.classList.add("open-popup")
 }
@@ -39,14 +46,41 @@ function closePopup() {
   main.classList.remove("close-on-popup")
 }
 
-async function login(email, password) {
+async function login(emailLogin, passwordLogin) {
   try {
+
       const bodyData = {
-          email,
-          password
+          email: emailLogin,
+          password: passwordLogin
       }
 
       const response = await api.post('/login', bodyData)
+      const loggedUser = response.data.data
+      localStorage.setItem("user", JSON.stringify(loggedUser))
+
+      formLogin.reset()
+      window.location.href = 'index.html'
+
+  } catch (error) {
+      alert(error.response.message)
+  }
+}
+
+async function signup(usernameInput, emailInput, passwordInput) {
+  try {
+
+      if (passwordInput !== passwordConfirm) {
+        openPopup()
+        return
+      }
+
+      const bodyData = {
+          name: usernameInput,
+          email: emailInput,
+          password: passwordInput
+      }
+
+      const response = await api.post('/signup', bodyData)
       const loggedUser = response.data.data
       localStorage.setItem("user", JSON.stringify(loggedUser))
 

@@ -1,15 +1,17 @@
+const qSelector = (element) => document.querySelector(element)
+
 const loggedUser = JSON.parse(localStorage.getItem("user"))
 const email = localStorage.getItem("user.email")
 const noteId = localStorage.getItem("message.id")
 
-const addBox = document.querySelector(".add-box")
-const popupBox = document.querySelector(".popup-box")
+const addBox = qSelector(".add-box")
+const popupBox = qSelector(".popup-box")
 const popupTitle = popupBox.querySelector("header p")
 const closeIcon = popupBox.querySelector("header i")
 const titleTag = popupBox.querySelector("input")
 const descTag = popupBox.querySelector("textarea")
 const addBtn = popupBox.querySelector("button")
-const editBtn = document.querySelector("#edit-btn")
+const editBtn = qSelector("#edit-btn")
 
 const months = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
@@ -17,14 +19,21 @@ const months = [
     ]
 
 // const notes = JSON.parse(localStorage.getItem("notes") || "[]")
-let isUpdate = false, updateId
+let isUpdate = false
+let updateId
 
-document.addEventListener('DOMContentLoaded', () => {
+function checkUser() {   
+
     if (!loggedUser) {
-        window.location.href = 'login.html';
-        return;
+        window.location.href = 'login.html'
+        return
     }
-})
+}
+
+function toggleMode() {
+    const html = document.documentElement
+    html.classList.toggle("dark")
+}
 
 // function showNotes() {
 //     document.querySelectorAll(".note").forEach(note => note.remove())
@@ -57,7 +66,7 @@ async function listNotes() {
         const getNotes = response.data.data.messages
 
         for (let i = 0; i < getNotes.length; i++) {
-            let liNote = `
+            let newNote = `
             <li class="note">
                 <div class="details">
                     <p>${response[i].title}</p>
@@ -75,7 +84,7 @@ async function listNotes() {
                 </div>
             </li>
             `
-            addBox.insertAdjacentHTML('afterend', liNote)
+            addBox.insertAdjacentHTML('afterend', newNote)
         }
     } catch (error) {
         console.error(error.message)
@@ -154,19 +163,6 @@ async function createNote(title, description){
     }
 }
 
-formNotes.addEventListener('submit', function(e){
-    e.preventDefault()
-
-    const title = e.target.title.value
-    const description = e.target.description.value
-
-    createNote(title, description)
-})
-
-document.getElementById("#sair").addEventListener('click', ()=>{
-    localStorage.removeItem("user")
-})
-
 // function updateNote(noteId, title, description) {
 //     isUpdate = true
 //     updateId = noteId
@@ -212,7 +208,21 @@ async function editNote(title, description){
 async function deleteNote(id){
 }
 
+checkUser()
 listNotes()
+
+formNotes.addEventListener('submit', function(e){
+    e.preventDefault()
+
+    const title = e.target.title.value
+    const description = e.target.description.value
+
+    createNote(title, description)
+})
+
+qSelector("#logout-btn").addEventListener("click", () => {
+    localStorage.removeItem("user")
+})
 
 btnEdit.addEventListener('click', function(e){
     e.preventDefault()
@@ -231,11 +241,6 @@ btnDelete.addEventListener('click', function(e){
 document.getElementById("#sair").addEventListener('click', ()=>{
     localStorage.removeItem("user")
 })
-
-function toggleMode() {
-    const html = document.documentElement
-    html.classList.toggle("dark")
-}
 
 addBox.addEventListener("click", () => {
     titleTag.focus()
