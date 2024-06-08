@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recados - Entrar</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="login">
+    <div class="main">
+        <div class="title-text">
+            <div class="title login">Entrar</div>
+            <div class="title login">Cadastrar</div>
+        </div>       
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slider" id="login" checked>
+                <input type="radio" name="slider" id="signup">
+                <label for="login" class="slide login">Entrar</label>
+                <label for="signup" class="slide signup">Cadastrar</label>
+                <div class="slide-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="" class="login">                    
+                    <div class="field">
+                        <input type="email" name="email" id="email" placeholder="Digite seu email..." required>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="password" id="passwordn" placeholder="Digite sua senha..." required>
+                    </div>
+                    <div class="pass-link"><a href="#">Esqueceu a senha?</a></div>
+                    <div class="field">
+                        <input type="submit" value="Entrar">
+                    </div>
+                    <div class="signup-link">Não tem conta? <a href="#">Cadastre-se</a></div>
+                    <div id="switch" onclick="toggleMode()">
+                        <button></button>
+                        <span></span>
+                    </div>
+                </form>
+                <form action="" class="signup">
+                    <div class="field">
+                        <input type="text" name="name" id="name" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="field">
+                        <input type="email" name="email-sign" id="email-sign" placeholder="Digite seu email..." required>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="password-sign" id="password-sign" placeholder="Digite sua senha..." required>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirme sua senha..." required>
+                    </div>                    
+                    <div class="field">
+                        <input type="submit" value="Cadastrar">
+                    </div>                    
+                </form>
+            </div>            
+        </div>
+    </div>
+    <div class="welcome">
+        <img src="./assets/success.png">
+        <h2>Sucesso!</h2>
+        <p>Bem-vindo(a)!</p>
+        <button type="submit" onclick="closePopup()">OK</button>
+    </div>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/api.js"></script>    
+    <script src="./js/login.js"></script>
+</body>
+</html>
