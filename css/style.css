@@ -208,6 +208,11 @@ form .field input[type="submit"] {
 
 }
 
+.note .details span {    
+    height: 250px;
+    overflow-y: auto;
+}
+
 .add-box, .icon, .bottom-content,
 .settings .menu li, .popup, header {
     display: flex;
@@ -449,6 +454,10 @@ form .row textarea {
     background: var(--border-color);
 }
 
+.logout #logout-btn:hover {
+    background: var(--link-color);
+}
+
 /* Switch Container*/
 .switch-container {
     position: fixed;
@@ -497,7 +506,7 @@ form .row textarea {
     border-radius: 9999px;
 }
 
-/* animation */
+/* Animation */
 @keyframes slide-in {
     from {left: 0;}
     to {left: 50%;}
@@ -506,54 +515,4 @@ form .row textarea {
 @keyframes slide-back {
     from {left: 50%;}
     to {left: 0;}
-}
-
-/* PopUps */
-.errorPopup {
-    width: 25em;    
-    background: white;
-    border-radius: 6px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.1);
-    text-align: center;
-    padding: 0 30px 30px;
-    color: #333333;
-    visibility: hidden;
-    transition: transform 0.4s, top 0.4s;
-}
-
-.open-popup {
-    visibility: visible;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.errorPopup img {
-    width: 6.2em;
-    margin-top: -50px;
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.errorPopup h2 {
-    font-size: 38px;
-    font-weight: 500;
-    margin: 30px 0 10px;
-}
-
-.errorPopup button {
-    width: 100%;
-    margin-top: 50px;
-    padding: 10px 0;
-    background: #6FD649;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    font-size: 18px;
-    background: #6FD649;
-    cursor: pointer;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
