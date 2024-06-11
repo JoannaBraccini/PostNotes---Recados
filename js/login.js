@@ -14,6 +14,7 @@ const passwordConfirm = qSelector("#password-confirm").value
 const emailLogin = qSelector("#email").value
 const passwordLogin = qSelector("#password").value
 
+//LOGIN
 async function login(email, password) {
   try {
     const bodyData = { email, password }
@@ -22,8 +23,6 @@ async function login(email, password) {
 
     formLogin.reset()
     localStorage.setItem("user", JSON.stringify(loginData))
-    emailUser = loginData.email
-    loggedUser = loginData.name
 
     alert(response.data.message)
     window.location.href = 'index.html'
@@ -40,6 +39,7 @@ formLogin.addEventListener('submit', (e) => {
   login(email, password)
 })
 
+//SIGNUP
 async function signup(name, email, password, passwordConfirm) {
   try {
     if (password !== passwordConfirm) {      

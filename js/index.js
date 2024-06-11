@@ -10,7 +10,9 @@ const logoutBtn = qSelector("#logout-btn")
 
 let updateId = null
 
-window.onload = {checkUser, listNotes}
+window.addEventListener("DOMContentLoaded", () => {
+    listNotes()
+})
 
 addBox.addEventListener("click", () => {
     titleTag.focus()
@@ -38,15 +40,27 @@ logoutBtn.addEventListener('click', (e) => {
     window.location.href = 'login.html'
 })
 
+function checkStorageData() {
+    if (!localStorage.getItem("user")) {
+        window.location.href = "login.html"
+    }
+}
 
+//LISTAR RECADOS
 async function listNotes() {
-    try {
+    try {        
+
+        checkUser()
+        const email = checkUser()//buscar a resposta retornada da função
+        const user = qSelector("#user-name")
+        user.innerHTML = `${JSON.parse(localStorage.getItem("user")).name} <i class="fa-regular fa-circle-user"></i>`
         document.querySelectorAll(".note").forEach(note => note.remove())//para apagar repetições
 
-        const response = await api.get(`/message/${emailUser}`)
-        const getNotes = response.data.data
+        const response = await api.get(`/message/${email}`)
+        const getNotes = response.data.data        
 
         getNotes.forEach(note => {
+            const date = note.date.replace('2024', '2024 &nbsp; &nbsp; &nbsp; &nbsp;')//adiciona os espaços no html
             const newNote = `
                 <li class="note" data-id="${note.id}">
                     <div class="details">
@@ -54,7 +68,7 @@ async function listNotes() {
                         <span class="note-description">${note.description}</span>
                     </div>
                     <div class="bottom-content">
-                        <span>${note.date}</span>
+                        <span>${date}</span>
                         <div class="settings">
                             <i class="fa-solid fa-ellipsis"></i>
                             <ul class="menu">
@@ -71,28 +85,29 @@ async function listNotes() {
             `     
             addBox.insertAdjacentHTML('afterend', newNote) //adiciona onde quiser ao invés de apenas dentro como innerHTML
         })
-        addEventListeners()
 
+        addEventListeners()
     } catch (error) {
-        alert(error.response.data.message)
+        alert(error.response.data.message)        
     }
 }
 
+//listeners para preparar todos os botões adicionados no html e enviar para o endpoint
 function addEventListeners() {
     document.querySelectorAll(".update-note").forEach(button => {
         button.addEventListener("click", (e) => {
-            const noteElement = e.target.closest(".note")//closest busca o elemento pai mais próximo com a classe 'note' e retorna todo conteúdo
-            const noteId = noteElement.dataset.id //busca o data-id
-            const title = noteElement.querySelector(".note-title").textContent //só se usa .value para inputs
-            const description = noteElement.querySelector(".note-description").textContent
+            const noteData = e.target.closest(".note")//closest busca o elemento pai mais próximo com a classe 'note' e retorna todo conteúdo
+            const noteId = noteData.dataset.id //busca o data-id
+            const title = noteData.querySelector(".note-title").textContent //só se usa .value para inputs
+            const description = noteData.querySelector(".note-description").textContent
             openUpdatePopup(noteId, title, description)
         })
     })
 
     document.querySelectorAll(".delete-note").forEach(button => {
         button.addEventListener("click", (e) => {
-            const noteElement = e.target.closest(".note")
-            const noteId = noteElement.dataset.id
+            const noteData = e.target.closest(".note")
+            const noteId = noteData.dataset.id
             deleteNote(noteId)
         })
     })
@@ -115,28 +130,42 @@ function resetPopup() {
     updateId = null
 }
 
+//CRIAR RECADO
 async function createNote(){
     try {
+
+        checkUser()
+        const email = checkUser()
+        
         let noteTitle = titleTag.value
         let noteDesc = descTag.value
+        
+        if(!noteTitle || noteTitle.length < 1){
+            return alert('Por favor, insira um título válido.')
+            }        
+    
+        if (!noteDesc || noteDesc.length < 1) {
+            return alert('Por favor, insira uma descrição válida.')
+        }
 
         const bodyData = {
             title: noteTitle,
             description: noteDesc
         }
 
-        const response = await api.post(`/message/${emailUser}`, bodyData)
+        const response = await api.post(`/message/${email}`, bodyData)
         
         formNotes.reset()
         alert(response.data.message)
         closeIcon.click()
-        listNotes()                
+        listNotes()
 
     }catch (error) {
-        alert(error.response.data.message)
+        alert(error)
     }    
 }
 
+//ATUALIZAR RECADO
 async function updateNote(){
     try {   
         const noteTitle = titleTag.value
@@ -160,6 +189,7 @@ async function updateNote(){
     }
 }
 
+//EXCLUIR RECADO
 async function deleteNote(noteId){
     try {
         let confirmDel = confirm("Excluir recado?")
