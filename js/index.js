@@ -53,7 +53,7 @@ async function listNotes() {
         checkUser()
         const email = checkUser()//buscar a resposta retornada da função
         const user = qSelector("#user-name")
-        user.innerHTML = `${JSON.parse(localStorage.getItem("user")).name} <i class="fa-regular fa-circle-user"></i>`
+        user.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${JSON.parse(localStorage.getItem("user")).name}`
         document.querySelectorAll(".note").forEach(note => note.remove())//para apagar repetições
 
         const response = await api.get(`/message/${email}`)

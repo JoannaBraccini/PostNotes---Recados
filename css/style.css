@@ -192,33 +192,11 @@ form .field input[type="submit"] {
 }
 
 /* Index */
-.nav {
-    height: 1em;
-    width: 100vw;
-}
-
-.nav .top-text, .nav #user-name {
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    color: var(--title-color);
-    
-}
-
-.nav .top-text {
-    font-size: 1.3em;
-    font-weight: 700;
-}
-
-.nav #user-name {
-    font-size: 0.8em;
-}
-
 .wrapper {
     margin: 50px;
     display: grid;
     gap: 30px;
-    grid-template-columns: repeat(auto-fill, 17em);
+    grid-template-columns: repeat(auto-fill, 17.5em);
 }
 
 .wrapper li {
@@ -473,10 +451,36 @@ form .row textarea {
     background: var(--bg-color);
 }
 
+/* Navbar */
+.nav {
+    height: 10px;
+}
+.nav h1 {
+    position: fixed;
+    top: 0.5em;
+    left: 3.5em;
+    color: var(--text-color);
+}
+
+.nav #user-name {
+    padding: 10px;
+    position: fixed;
+    top: 1.15em;
+    right: 7em;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--title-color);  
+}
+
+.nav #user-name:hover {
+    color: var(--border-color);
+    cursor: pointer;
+}
+
 .logout {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 1.5em;
+    right: 1.5em;
 }
 
 .logout #logout-btn {
@@ -495,33 +499,10 @@ form .row textarea {
     background: var(--link-color);
 }
 
-@media (max-width: 1300px) {
-    .nav h1 {
-        margin: 0.4em 36%;
-        font-size: 2em;
-    }
-}
-
-@media (max-width: 900px) {
-    .nav h1 {
-        margin: 0.5em 35%;
-        font-size: 1.8em;
-    }
-}
-
-@media (max-width: 600px) {
-    .nav h1 {
-        margin: 0.6em 25%;
-        font-size: 1.4em;
-    }
-}
-
-/* Switch Container*/
 .switch-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    margin: 0 10px;
+    top: 0.5em;
+    left: 1em;
 }
 
 #switch {
@@ -573,4 +554,15 @@ form .row textarea {
 @keyframes slide-back {
     from {left: 50%;}
     to {left: 0;}
+}
+
+/* Media */
+@media (max-width: 539px){
+    #user-name {
+        display: none;
+    }
+
+    .nav h1 {
+        left: 3em;
+    }
 }
