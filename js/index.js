@@ -10,7 +10,7 @@ const logoutBtn = qSelector("#logout-btn")
 
 let updateId = null
 
-window.onload(checkUser())
+document.onload = checkUser()
 
 window.addEventListener("DOMContentLoaded", () => {
     listNotes()
