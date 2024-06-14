@@ -10,6 +10,8 @@ const logoutBtn = qSelector("#logout-btn")
 
 let updateId = null
 
+window.onload(checkUser())
+
 window.addEventListener("DOMContentLoaded", () => {
     listNotes()
 })
@@ -161,7 +163,7 @@ async function createNote(){
         listNotes()
 
     }catch (error) {
-        alert(error)
+        alert(error.response.data.message)
     }    
 }
 
