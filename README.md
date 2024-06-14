@@ -1,10 +1,8 @@
-
 <a name="readme-top"></a>
-
+  
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -35,15 +33,15 @@
   <summary>Conteúdo</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Sobre o Projeto</a>
+      <a href="#sobre-o-projeto">Sobre o Projeto</a>
       <ul>
-        <li><a href="#built-with">Linguagens</a></li>
+        <li><a href="#linguagens">Linguagens</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Uso</a></li>
-    <li><a href="#roadmap">Etapas</a></li>
-    <li><a href="#license">Licença</a></li>
-    <li><a href="#contact">Contato</a></li>
+    <li><a href="#uso">Uso</a></li>
+    <li><a href="#etapas">Etapas</a></li>
+    <li><a href="#licença">Licença</a></li>
+    <li><a href="#contato">Contato</a></li>
   </ol>
 </details>
 
@@ -52,11 +50,10 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre o Projeto
 
-[![PostNotes Screen Shot][product-screenshot1]](https://example.com)
+[![PostNotes Screen Shot][product-screenshot1]]
 
 
-[![PostNotes Screen Shot][product-screenshot2]](https://example.com)
-
+[![PostNotes Screen Shot][product-screenshot2]]
 
 <p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
@@ -75,9 +72,9 @@
 <!-- USAGE EXAMPLES -->
 ## Uso
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Criação e gerenciamento de recados, anotações e lembretes.
 
-_Para mais exemplos, verifique a documentação [Documentation](https://example.com)_
+_Para mais exemplos, verifique a documentação [Postman](https://documenter.getpostman.com/view/34248306/2sA3BrYqB5)
 
 <p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
@@ -86,21 +83,21 @@ _Para mais exemplos, verifique a documentação [Documentation](https://example.
 <!-- ROADMAP -->
 ## Etapas
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [x] Desenvolvimento API Back-End
+- [x] Desenvolvimento Front-End
+- [x] Integração e Deply
+    - [x] Axios
 
-See the [open issues](https://github.com/JoannaBraccini/FrontRecados/issues) for a full list of proposed features (and known issues).
+Explore [issues](https://github.com/JoannaBraccini/FrontRecados/issues) para acessar sugestões de features (e erros conhecidos).
 
-<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
 
 
 
 <!-- LICENSE -->
 ## Licença
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Licença MIT. Acesse `LICENSE.txt` para mais informações.
 
 <p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
@@ -117,8 +114,8 @@ Joanna Braccini - [@joannabraccini]([https://twitter.com/twitter_handle](https:/
 
 [issues-shield]: https://img.shields.io/badge/-issues-black.svg?style=for-the-badge&logo=github&colorB=555
 [issues-url]: https://github.com/JoannaBraccini/FrontRecados/issues
-[license-shield]: https://img.shields.io/github/license/JoannaBraccini/FrontRecados.svg?style=for-the-badge
-[license-url]: https://mit-license.org/
+[license-shield]: https://img.shields.io/badge/license-E34F26.svg?style=for-the-badge
+[license-url]: https://github.com/JoannaBraccini/FrontRecados/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/joannabraccini
 [product-screenshot1]: ./assets/print1%20PostNotes.png
