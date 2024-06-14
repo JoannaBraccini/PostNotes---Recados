@@ -50,12 +50,12 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre o Projeto
 
-[![PostNotes Screen Shot][product-screenshot1]](https://example.com)
+[![PostNotes Screen Shot][product-screenshot1]]
 
 
-[![PostNotes Screen Shot][product-screenshot2]](https://example.com)
+[![PostNotes Screen Shot][product-screenshot2]]
 
-<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
 
 
@@ -65,18 +65,18 @@
 * [![CSS][css]][CSS-url]
 * [![Javascript][Javascript]][Javascript-url]
 
-<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Uso
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Criação e gerenciamento de recados, anotações e lembretes.
 
 _Para mais exemplos, verifique a documentação [Postman](https://documenter.getpostman.com/view/34248306/2sA3BrYqB5)
 
-<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
 
 
@@ -88,7 +88,7 @@ _Para mais exemplos, verifique a documentação [Postman](https://documenter.get
 - [x] Integração e Deply
     - [x] Axios
 
-Explore [open issues](https://github.com/JoannaBraccini/FrontRecados/issues) para acessar sugestões de features (e erros conhecidos).
+Explore [issues](https://github.com/JoannaBraccini/FrontRecados/issues) para acessar sugestões de features (e erros conhecidos).
 
 <p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
 
@@ -99,7 +99,7 @@ Explore [open issues](https://github.com/JoannaBraccini/FrontRecados/issues) par
 
 Licença MIT. Acesse `LICENSE.txt` para mais informações.
 
-<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
 
 
@@ -109,7 +109,7 @@ Licença MIT. Acesse `LICENSE.txt` para mais informações.
 Joanna Braccini - [@joannabraccini]([https://twitter.com/twitter_handle](https://www.linkedin.com/in/joannabraccini/))
 
 
-<p align="right">(<a href="md#readme-top">voltar ao início</a>)</p>
+<p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
 
 [issues-shield]: https://img.shields.io/badge/-issues-black.svg?style=for-the-badge&logo=github&colorB=555
