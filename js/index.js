@@ -10,10 +10,15 @@ const logoutBtn = qSelector("#logout-btn")
 
 let updateId = null
 
-document.onload = checkUser()
-
 window.addEventListener("DOMContentLoaded", () => {
-    listNotes()
+    try {
+        const email = JSON.parse(localStorage.getItem("user")).email
+        return email
+            
+    } catch (error) {
+        alert('Faça login!')
+        return window.location.href = 'login.html'
+    }
 })
 
 addBox.addEventListener("click", () => {
