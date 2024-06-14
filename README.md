@@ -38,10 +38,10 @@
         <li><a href="#linguagens">Linguagens</a></li>
       </ul>
     </li>
-    <li><a href="md#uso">Uso</a></li>
-    <li><a href="md#etapas">Etapas</a></li>
-    <li><a href="md#licença">Licença</a></li>
-    <li><a href="md#contato">Contato</a></li>
+    <li><a href="#uso">Uso</a></li>
+    <li><a href="#etapas">Etapas</a></li>
+    <li><a href="#licença">Licença</a></li>
+    <li><a href="#contato">Contato</a></li>
   </ol>
 </details>
 
