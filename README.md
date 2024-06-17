@@ -50,10 +50,10 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre o Projeto
 
-[![PostNotes Screen Shot][product-screenshot1]]
+![PostNotes Screen Shot][product-screenshot1]
 
 
-[![PostNotes Screen Shot][product-screenshot2]]
+![PostNotes Screen Shot][product-screenshot2]
 
 <p align="right">(<a href="#readme-top">voltar ao início</a>)</p>
 
