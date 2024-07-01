@@ -15,58 +15,60 @@ const emailLogin = qSelector("#email").value
 const passwordLogin = qSelector("#password").value
 
 //LOGIN
-async function login(email, password) {
-  try {
-    const bodyData = { email, password }
-    const response = await api.post('/login', bodyData)
-    const loginData = response.data.data
-
-    formLogin.reset()
-    localStorage.setItem("user", JSON.stringify(loginData))
-
-    alert(response.data.message)
-    window.location.href = 'index.html'
-
-  } catch (error) {
-    alert(error.response.data.message)
-  }
-}
-
-formLogin.addEventListener('submit', (e) => {
+formLogin.addEventListener('submit', async (e) => {
   e.preventDefault()
+
+  if(!formLogin.checkValidity()) {
+    e.stopPropagation()
+  }
+
+  formLogin.classList.add("was-validated")
+
   const email = e.target.email.value
   const password = e.target.password.value
-  login(email, password)
+  
+  showLoading(true,'.spinner-btn')
+  const response = await login(email, password)
+  showLoading(false, '.spinner-btn')
+
+  if(!response.success) {
+    return alertToast(response.message, 'danger')
+  }
+  alertToast(response.message, 'success')
+  formLogin.reset()
+  setTimeout(() => {
+    window.location.href = 'index.html'
+  }, 1500)
 })
 
 //SIGNUP
-async function signup(name, email, password, passwordConfirm) {
-  try {
-    if (password !== passwordConfirm) {      
-      alert('As senhas devem ser idênticas.')
-      return
-    }
-
-    const bodyData = { name, email, password }
-    const response = await api.post('/signup', bodyData)    
-
-    alert(response.data.message)
-    formSignup.reset()
-    loginBtn.click()
-
-  } catch (error) {
-      loginBtn.click()
-      alert(error.response.data.message)
-  }
-}
-
-formSignup.addEventListener('submit', (e) => {
+formSignup.addEventListener('submit', async (e) => {
   e.preventDefault()
-  const name = e.target.username.value
+
+  if(!formSignup.checkValidity()) {
+    e.stopPropagation()
+    return formSignup.classList.add('was-validated')
+  }
+
+  const name = e.target['username'].value
   const email = e.target['email-sign'].value
   const password = e.target['password-sign'].value
   const passwordConfirm = e.target['password-confirm'].value
-  signup(name, email, password, passwordConfirm)
+  
+  if( password !== passwordConfirm) {
+    return alertSign(true, 'danger', 'As senhas não conferem!')
+  }
+
+  showLoading(true)
+  const response = await signup(name, email, password)
+  showLoading(false)
+
+  if(!response.success) {
+    return alertSign(true, 'danger', response.message)
+  }
+  alertSign(true, 'succes', response.message)
+
+  formSignup.reset()
 })
 
 signupBtn.onclick = (()=>{

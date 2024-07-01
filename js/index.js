@@ -9,11 +9,13 @@ const addBtn = popupBox.querySelector("button")
 const logoutBtn = qSelector("#logout-btn")
 
 let updateId = null
+let page = 1
+let limit = 8
 
 window.addEventListener("DOMContentLoaded", () => {
     try {
-        const email = JSON.parse(localStorage.getItem("user")).email
-        return email
+        const userId = JSON.parse(localStorage.getItem("user")).id
+        return userId
             
     } catch (error) {
         alert('Faça login!')
@@ -32,13 +34,37 @@ closeIcon.addEventListener("click", () => {
     popupBox.classList.remove("show")
 })
 
-formNotes.addEventListener('submit', (e) => {
+formNotes.addEventListener('submit', async (e) => {
     e.preventDefault()
+
+    const title = titleTag.value
+    const description = descTag.value
+
     if (updateId) {
-        updateNote()
+        showLoading(true,'.spinner-btn')
+        const response = await updateNote(title, description)
+        showLoading(false, '.spinner-btn')
+        
+        if(!response.success) {
+            return alertToast(response.message, 'danger')
+          }
+          alertToast(response.message, 'success')       
+          updateId = null             
+        
     } else {
-        createNote()
+        const userId = checkUser()
+        showLoading(true,'.spinner-btn')
+        const response = await createNote(title, description, userId)
+        showLoading(false, '.spinner-btn')
+        if(!response.success) {
+            return alertToast(response.message, 'danger')
+          }
+          alertToast(response.message, 'success')         
     }
+
+    formNotes.reset()        
+    closeIcon.click()
+    listNotes()
 })
 
 logoutBtn.addEventListener('click', (e) => {
@@ -55,48 +81,59 @@ function checkStorageData() {
 
 //LISTAR RECADOS
 async function listNotes() {
-    try {        
 
-        checkUser()
-        const email = checkUser()//buscar a resposta retornada da função
-        const user = qSelector("#user-name")
-        user.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${JSON.parse(localStorage.getItem("user")).name}`
-        document.querySelectorAll(".note").forEach(note => note.remove())//para apagar repetições
+    const userId = checkUser()
+    showLoadingNotes(true)
+    const response = await getNotes(userId, page, limit)
+    showLoadingNotes(false)
 
-        const response = await api.get(`/message/${email}`)
-        const getNotes = response.data.data        
-
-        getNotes.forEach(note => {
-            const date = note.date.replace('2024', '2024 &nbsp; &nbsp; &nbsp; &nbsp;')//adiciona os espaços no html
-            const newNote = `
-                <li class="note" data-id="${note.id}">
-                    <div class="details">
-                        <p class="note-title">${note.title}</p>
-                        <span class="note-description">${note.description}</span>
-                    </div>
-                    <div class="bottom-content">
-                        <span>${date}</span>
-                        <div class="settings">
-                            <i class="fa-solid fa-ellipsis"></i>
-                            <ul class="menu">
-                                <li class="update-note">
-                                    <i class="fa-solid fa-pen"></i>Editar
-                                </li>
-                                <li class="delete-note">
-                                    <i class="fa-solid fa-trash-can"></i>Excluir
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            `     
-            addBox.insertAdjacentHTML('afterend', newNote) //adiciona onde quiser ao invés de apenas dentro como innerHTML
-        })
-
-        addEventListeners()
-    } catch (error) {
-        alert(error.response.data.message)        
+    if(!response.success) {
+        alertToast(response.message, 'danger')
+        return logoutBtn.click()
     }
+
+    showNotes(response.data.totalNotes)
+    createPagination(response.data.totalPages)    
+}
+
+//MOSTRAR RECADOS NO HTML
+function showNotes(notes) {
+    const user = qSelector("#user-name")
+    user.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${JSON.parse(localStorage.getItem("user")).name}`
+
+    if(notes.length === 0) {
+        alertToast('Nenhum recado encontrado!', 'danger')
+    }
+    document.querySelectorAll(".note").forEach(note => note.remove())//para apagar repetições      
+
+    notes.forEach(note => {
+        const date = note.date.replace('2024', '2024 &nbsp; &nbsp; &nbsp; &nbsp;')//adiciona os espaços no html
+        const newNote = `
+            <li class="note" data-id="${note.id}">
+                <div class="details">
+                    <p class="note-title">${note.title}</p>
+                    <span class="note-description">${note.description}</span>
+                </div>
+                <div class="bottom-content">
+                    <span>${date}</span>
+                    <div class="settings">
+                        <i class="fa-solid fa-ellipsis"></i>
+                        <ul class="menu">
+                            <li class="update-note">
+                                <i class="fa-solid fa-pen"></i>Editar
+                            </li>
+                            <li class="delete-note">
+                                <i class="fa-solid fa-trash-can"></i>Excluir
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        `     
+        addBox.insertAdjacentHTML('afterend', newNote) //adiciona onde quiser ao invés de apenas dentro como innerHTML
+    })
+
+    addEventListeners()
 }
 
 //listeners para preparar todos os botões adicionados no html e enviar para o endpoint
@@ -137,77 +174,72 @@ function resetPopup() {
     updateId = null
 }
 
-//CRIAR RECADO
-async function createNote(){
-    try {
-
-        checkUser()
-        const email = checkUser()
-        
-        let noteTitle = titleTag.value
-        let noteDesc = descTag.value
-        
-        if(!noteTitle || noteTitle.length < 1){
-            return alert('Por favor, insira um título válido.')
-            }        
-    
-        if (!noteDesc || noteDesc.length < 1) {
-            return alert('Por favor, insira uma descrição válida.')
-        }
-
-        const bodyData = {
-            title: noteTitle,
-            description: noteDesc
-        }
-
-        const response = await api.post(`/message/${email}`, bodyData)
-        
-        formNotes.reset()
-        alert(response.data.message)
-        closeIcon.click()
-        listNotes()
-
-    }catch (error) {
-        alert(error.response.data.message)
-    }    
-}
-
-//ATUALIZAR RECADO
-async function updateNote(){
-    try {   
-        const noteTitle = titleTag.value
-        const noteDesc = descTag.value
-
-        const bodyData = {
-            title: noteTitle,
-            description: noteDesc
-        }
-
-        const response = await api.put(`/message/${updateId}`, bodyData)
-        alert(response.data.message)
-
-        formNotes.reset()
-        closeIcon.click()
-        listNotes()
-        updateId = null
-
-    } catch (error) {
-        alert(error.response.data.message)
+function createPagination(totalNotes) {
+    const totalPages = Math.ceil(totalNotes / limit)
+    const containerPagination = qSelector('#pagination')
+  
+    containerPagination.innerHTML = `
+      <li class="page-item">
+        <a class="page-link" id="prev-link">Voltar</a>
+      </li>
+    `
+  
+    for(let i = 1; i <= totalPages; i++){
+      if(page === i) {
+        containerPagination.innerHTML += `
+          <li class="page-item active">
+            <a class="page-link">${i}</a>
+          </li>
+        `
+      } else {
+        containerPagination.innerHTML += `
+        <li class="page-item">
+          <a class="page-link">${i}</a>
+        </li>
+      `
+      }    
     }
-}
-
-//EXCLUIR RECADO
-async function deleteNote(noteId){
-    try {
-        let confirmDel = confirm("Excluir recado?")
-        if (!confirmDel) return
-
-        const response = await api.delete(`/message/${noteId}`)
-        listNotes()
-
-        alert(response.data.message)
-
-    } catch (error) {
-        alert(error.response.data.message)
+  
+    containerPagination.innerHTML = `
+      <li class="page-item">
+        <a class="page-link" id="next-link">Próxima</a>
+      </li>
+    `
+  
+    const links = document.querySelectorAll('.page-link')
+  
+    links.forEach((link) => {
+      link.addEventListener('click', async () => {
+  
+        switch (link.id) {
+          case 'prev-link':
+            page--          
+            break;
+          case 'next-link':
+            page++
+            break;      
+          default:
+            page = Number(link.innerText)
+            break;
+        }
+  
+        await listNotes()
+      })
+    })
+  
+    const prevLink = document.getElementById('prev-link')
+    const nextLink = document.getElementById('next-link')
+  
+    if(page === 1) {
+      prevLink.classList.add('disabled')
+    } else {
+      prevLink.classList.remove('disabled')
     }
+  
+    if(page === totalPages) {
+      nextLink.classList.add('disabled')
+    } else {
+      nextLink.classList.remove('disabled')
+    }
+  
 }
